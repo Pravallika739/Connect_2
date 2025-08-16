@@ -1,15 +1,16 @@
 let userConfig = undefined
 try {
   // try to import ESM first
-  userConfig = await import('./v0-user-next.config.mjs')
+  userConfig = await import('./connect-user-next.config.mjs')
 } catch (e) {
   try {
     // fallback to CJS import
-    userConfig = await import("./v0-user-next.config");
+    userConfig = await import("./connect-user-next.config");
   } catch (innerError) {
     // ignore error
   }
 }
+const isProd = process.env.NODE_ENV === 'production';
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -27,6 +28,9 @@ const nextConfig = {
     parallelServerBuildTraces: true,
     parallelServerCompiles: true,
   },
+  output: 'export',
+  basePath: '/Connect_2',
+  assetPrefix: '/Connect_2/',
 }
 
 if (userConfig) {
